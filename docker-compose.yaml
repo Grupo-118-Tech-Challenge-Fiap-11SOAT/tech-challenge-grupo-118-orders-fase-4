@@ -1,0 +1,46 @@
+﻿version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    container_name: orders-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 'pgql!Passw0rd'
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
+  api:
+    ports:
+      - '8080:8080'
+      - '8081:8081'
+    depends_on:
+      - postgres
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=localhost;Port=5432;Database=Order-db;User Id=myUsername;Password=myPassword;"
+      Jwt__Key: "08fa1d833b85a776166dd0a30ec21687"
+      Jwt__Issuer: "http://localhost:8080"
+      Jwt__Audience: "http://localhost:8080"
+      Jwt__ExpirationMinutes: "60"
+    restart: on-failure:5
+    deploy:
+      resources:
+        limits:
+          memory: 300MB
+          cpus: 0.4
+    healthcheck:
+      test: curl --fail http://localhost:8080/healthz || exit 1
+      interval: 40s
+      timeout: 30s
+      retries: 3
+      start_period: 60s
+    build:
+      context: .
+      dockerfile: src/Adapters/Driving/Orders.API/Dockerfile
+
+volumes:
+  postgres_data:
