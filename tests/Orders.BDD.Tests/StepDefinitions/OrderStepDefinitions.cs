@@ -1,17 +1,16 @@
-using Reqnroll;
-using Xunit;
 using Application.Order;
 using Domain.Order.Dtos;
+using Domain.Order.Entities;
 using Domain.Order.Ports.Out;
-using Domain.Products.Ports.In;
-using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Domain.Order.ValueObjects;
 using Domain.Products.Entities;
+using Domain.Products.Ports.In;
+using Domain.Products.ValueObjects;
+using Moq;
+using Reqnroll;
+using Xunit;
 
-namespace TechChallengeFastFood.BDD.Tests.StepDefinitions
+namespace Orders.BDD.Tests.StepDefinitions
 {
     [Binding]
     public class OrderStepDefinitions
@@ -44,11 +43,11 @@ namespace TechChallengeFastFood.BDD.Tests.StepDefinitions
             _productManagerMock.Setup(pm => pm.GetActiveProductsByIds(It.IsAny<int[]>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new List<Product>
                 {
-                    new Product(1, "Hamburguer", "Delicioso", 20.0m, "Lanche", "url")
+                    new Product("Lanche", "Hamburguer", ProductType.Snack, 20.0m, true)
                 });
             
             _orderRepositoryMock.Setup(r => r.CreateAsync(It.IsAny<Domain.Order.Entities.Order>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
+                .Returns((Task<Order>)Task.CompletedTask);
         }
 
         [When(@"eu envio o pedido")]

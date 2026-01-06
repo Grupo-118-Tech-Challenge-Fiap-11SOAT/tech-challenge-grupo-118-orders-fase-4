@@ -2,7 +2,7 @@ using Domain.Order.Ports.Out;
 using Domain.Order.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infra.Database.Postgres.Order.Repository;
+namespace Infra.Database.SqlServer.Order.Repository;
 
 public class OrderRepository : IOrderRepository
 {

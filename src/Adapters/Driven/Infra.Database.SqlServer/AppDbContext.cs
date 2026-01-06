@@ -1,13 +1,13 @@
-using Infra.Database.Postgres.Order.Configuration;
+using Infra.Database.SqlServer.Order.Configuration;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infra.Database.Postgres;
+namespace Infra.Database.SqlServer;
 
-public class AppDbContext: DbContext
+public class AppDbContext : DbContext
 {
     public DbSet<Domain.Order.Entities.Order> Orders { get; set; }
     public DbSet<Domain.Order.Entities.OrderItem> OrderItems { get; set; }
-
+    
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }

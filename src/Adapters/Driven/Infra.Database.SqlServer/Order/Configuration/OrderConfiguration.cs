@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infra.Database.Postgres.Order.Configuration;
+namespace Infra.Database.SqlServer.Order.Configuration;
 
 public class OrderConfiguration : IEntityTypeConfiguration<Domain.Order.Entities.Order>
 {

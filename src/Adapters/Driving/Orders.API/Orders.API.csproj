@@ -5,14 +5,15 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerfileContext>..\..\..</DockerfileContext>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\net8.0\TechChallengeFastFood.API.xml</DocumentationFile>
+      <DocumentationFile>bin\Debug\net8.0\Orders.API.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\net8.0\TechChallengeFastFood.API.xml</DocumentationFile>
+      <DocumentationFile>bin\Release\net8.0\Orders.API.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -20,6 +21,10 @@
     </PropertyGroup>    
     
     <ItemGroup>
+        <PackageReference Include="coverlet.collector" Version="6.0.4">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.16" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
             <PrivateAssets>all</PrivateAssets>
@@ -32,13 +37,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Core\Application\Application.csproj" />
-      <ProjectReference Include="..\..\Driven\Infra.Database.Postgres\Infra.Database.Postgres.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="..\..\..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+      <ProjectReference Include="..\..\Driven\Infra.Database.SqlServer\Infra.Database.SqlServer.csproj" />
     </ItemGroup>
 
 </Project>

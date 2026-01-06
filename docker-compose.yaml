@@ -1,27 +1,13 @@
-﻿version: '3.8'
-
-services:
-  postgres:
-    image: postgres
-    container_name: orders-db
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 'pgql!Passw0rd'
-      POSTGRES_DB: mydatabase
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    
-  api:
+﻿services:
+  techchallengeorders:
+    image: techchallengeorders
     ports:
       - '8080:8080'
       - '8081:8081'
     depends_on:
-      - postgres
+      - sqldatabasetechchallengeorders
     environment:
-      ConnectionStrings__DefaultConnection: "Server=localhost;Port=5432;Database=Order-db;User Id=myUsername;Password=myPassword;"
+      ConnectionStrings__DefaultConnection: "Data Source=sqldatabasetechchallengeorders, 1433;Database=TechChallengeFastFoodUsers;Integrated Security=false;User ID=sa;Password=Mssql!Passw0rd;TrustServerCertificate=true;Max Pool Size=200;Min Pool Size=10;Connection Timeout=30;"
       Jwt__Key: "08fa1d833b85a776166dd0a30ec21687"
       Jwt__Issuer: "http://localhost:8080"
       Jwt__Audience: "http://localhost:8080"
@@ -42,5 +28,21 @@ services:
       context: .
       dockerfile: src/Adapters/Driving/Orders.API/Dockerfile
 
+  sqldatabasetechchallengeorders:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqldatabasetechchallengeorders
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: 'Mssql!Passw0rd'
+    restart: unless-stopped
+    volumes:
+      - mssql_data:/var/opt/mssql
+    deploy:
+      resources:
+        limits:
+          memory: 1GB
+
 volumes:
-  postgres_data:
+  mssql_data: { }

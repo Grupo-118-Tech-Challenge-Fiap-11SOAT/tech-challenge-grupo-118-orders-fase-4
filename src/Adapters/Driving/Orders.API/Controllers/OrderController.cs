@@ -30,6 +30,10 @@ public class OrderController : ControllerBase
         Detail = "Please check the order ID and ensure that payment details are available."
     };
     
+    /// <summary>
+    /// Constructor of the OrderController class.
+    /// </summary>
+    /// <param name="orderManager"></param>
     public OrderController(IOrderManager orderManager)
     {
         _orderManager = orderManager;
