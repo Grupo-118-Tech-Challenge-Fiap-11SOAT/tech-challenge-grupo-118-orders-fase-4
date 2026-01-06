@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: ${DOCKER_REGISTRY}
-  imageName: poc-api-dotnet-cicd-template-usage-fase4
+  imageName: tech-challenge-grupo-118-orders-fase-4
   tag: "${POC_IMAGE_TAG}"  # Will be set via --set or CI/CD
   pullPolicy: IfNotPresent
 
@@ -12,18 +12,18 @@ acrCredentials:
   username: "${ACR_USERNAME}"  # Will be set via --set or CI/CD
   password: "${ACR_PASSWORD}"  # Will be set via --set or CI/CD
 
-nameOverride: "poc-api-dotnet-cicd-template-usage-fase4"
-fullnameOverride: "poc-api-dotnet-cicd-template-usage-fase4"
+nameOverride: "tech-challenge-grupo-118-orders-fase-4"
+fullnameOverride: "tech-challenge-grupo-118-orders-fase-4"
 
 serviceAccount:
   create: true
   annotations: {}
-  name: "poc-api-dotnet-cicd-template-usage-fase4-sa"
+  name: "tech-challenge-grupo-118-orders-fase-4-sa"
 
 service:
   port: 80
   instances:
-    - name: poc-api-dotnet-cicd-template-usage-fase4
+    - name: tech-challenge-grupo-118-orders-fase-4
       type: ClusterIP
       port: 80
       targetPort: 8080
@@ -32,7 +32,7 @@ service:
 internalIngress:
   enabled: true
   className: "nginx-internal-static"
-  path: /poc-api(/|$)(.*)
+  path: /orders-api(/|$)(.*)
   pathType: ImplementationSpecific
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
@@ -80,24 +80,16 @@ configMap:
 
 secret:
   enabled: true
-  name: "poc-api-dotnet-cicd-template-usage-fase4"
+  name: "tech-challenge-grupo-118-orders-fase-4"
   annotations: {}
   data:
-    #         STEPS: 2. Criação das chaves no secret, com os valores que foram mapeados dos segredos    
-    poc-db-host: "${DatabaseConfigurations__Host}"
-    poc-db-port: "${DatabaseConfigurations__Port}"
-    poc-db-name: "${DatabaseConfigurations__Name}"
-    poc-api-key: "${ApiConfigurations__Key}"
+    #         STEPS: 2. Criação das chaves no secret, com os valores que foram mapeados dos segredos
+    orders-db-host: "${ConnectionStrings__DefaultConnection}"
   #         STEPS: 3. Mapear as chaves dos segredos para variaveis de ambientes, no formato que o asp.net reconhece para sobrescrever as configs do json
+
   envVars:
-    - name: DatabaseConfigurations__Host
-      secretKey: poc-db-host
-    - name: DatabaseConfigurations__Port
-      secretKey: poc-db-port
-    - name: DatabaseConfigurations__Name
-      secretKey: poc-db-name
-    - name: ApiConfigurations__Key
-      secretKey: poc-api-key
+    - name: ConnectionStrings__DefaultConnection
+      secretKey: orders-db-connectionstring
 
 nodeSelector: {}
 
