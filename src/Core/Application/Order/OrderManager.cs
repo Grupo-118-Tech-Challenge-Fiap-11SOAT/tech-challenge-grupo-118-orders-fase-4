@@ -21,12 +21,12 @@ public class OrderManager : IOrderManager
     }
 
 
-    public async Task<List<OrderResponseDto?>> GetAllAsync(OrderStatus status, int skip, int take,
-        CancellationToken cancellationToken)
+    public async Task<List<OrderResponseDto?>> GetAllAsync(OrderStatus status, int skip = 0, int take = 0,
+        CancellationToken cancellationToken = default)
     {
         var ordersList = await _orderRepository.GetAllAsync(status, cancellationToken, skip, take);
 
-        var result = new List<OrderResponseDto>(ordersList.Count);
+        var result = new List<OrderResponseDto?>(ordersList.Count);
 
         foreach (var order in ordersList)
         {
@@ -39,31 +39,29 @@ public class OrderManager : IOrderManager
     public async Task<List<OrderResponseDto>?> GetOrdersToMonitorAsync(CancellationToken cancellationToken = default,
         int skip = 0, int take = 10)
     {
+        var orderEntities = await _orderRepository.GetOrdersToMonitorAsync(cancellationToken, skip, take);
+
+        if (orderEntities is null)
+            return null;
+        
+        var orderDtos = new List<OrderResponseDto>();
+        
+        orderEntities.ForEach(orderEntity =>
         {
-            var orderEntities = await _orderRepository.GetOrdersToMonitorAsync(cancellationToken, skip, take);
+            var orderItems = CreateOrderItemsFromOrder(orderEntity);
 
-            if (orderEntities is null)
-                return null;
-            
-            var orderDtos = new List<OrderResponseDto>();
-            
-            orderEntities.ForEach(orderEntity =>
-            {
-                var orderItems = CreateOrderItemsFromOrder(orderEntity);
-
-                orderDtos.Add(new OrderResponseDto(orderEntity.OrderNumber,
-                    orderEntity.Cpf,
-                    orderEntity.Total,
-                    orderEntity.Status,
-                    orderEntity.IsActive,
-                    orderItems,
-                    orderEntity.Id,
-                    orderEntity.CreatedAt,
-                    orderEntity.UpdatedAt));
-            });
-            
-            return orderDtos;
-        }
+            orderDtos.Add(new OrderResponseDto(orderEntity.OrderNumber,
+                orderEntity.Cpf,
+                orderEntity.Total,
+                orderEntity.Status,
+                orderEntity.IsActive,
+                orderItems,
+                orderEntity.Id,
+                orderEntity.CreatedAt,
+                orderEntity.UpdatedAt));
+        });
+        
+        return orderDtos;
     }
     
     public async Task<OrderResponseDto> CreateAsync(OrderRequestDto orderDto, CancellationToken cancellationToken)

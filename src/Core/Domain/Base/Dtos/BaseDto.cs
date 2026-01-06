@@ -2,7 +2,7 @@
 
 public abstract class BaseDto
 {
-    public BaseDto()
+    protected BaseDto()
     {
         Error = false;
         ErrorMessage = string.Empty;

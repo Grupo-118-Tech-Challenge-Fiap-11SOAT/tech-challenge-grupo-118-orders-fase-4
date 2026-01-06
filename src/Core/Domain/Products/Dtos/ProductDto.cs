@@ -39,7 +39,7 @@ public class ProductDto
     /// </summary>
     public bool IsActive { get; set; }
     
-    public ProductDto(string name, string description, ProductType category, decimal price, bool isActive, int id = 0)
+    public ProductDto(string name, string description, ProductType category, decimal price, bool isActive, int id)
     {
         if (id != 0)
             this.Id = id;
