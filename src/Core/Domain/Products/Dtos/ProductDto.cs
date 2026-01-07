@@ -60,4 +60,7 @@ public class ProductDto
         this.Price = price;
         this.IsActive = isActive;
     }
+
+    public ProductDto()
+    {}
 }

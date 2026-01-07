@@ -1,8 +1,14 @@
 using System.Reflection;
+using Application.Order;
+using Application.Products;
+using Domain.Order.Ports.In;
+using Domain.Order.Ports.Out;
+using Domain.Products.Ports.In;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Infra.Database.SqlServer;
+using Infra.Database.SqlServer.Order.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +57,10 @@ builder.Services.AddSwaggerGen(s =>
         Scheme = "Bearer"
     });
 });
+
+builder.Services.AddScoped<IOrderManager, OrderManager>();
+builder.Services.AddScoped<IProductManager, ProductManager>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 var app = builder.Build();
 
