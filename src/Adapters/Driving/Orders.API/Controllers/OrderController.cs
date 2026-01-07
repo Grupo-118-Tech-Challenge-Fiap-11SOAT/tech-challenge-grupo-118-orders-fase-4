@@ -23,13 +23,6 @@ public class OrderController : ControllerBase
         Detail = "The specified order was not found."
     };
     
-    private readonly ProblemDetails PAYMENT_DETAILS_NOT_FOUND = new ProblemDetails
-    {
-        Title = "Order or Payment details not found",
-        Status = StatusCodes.Status404NotFound,
-        Detail = "Please check the order ID and ensure that payment details are available."
-    };
-    
     /// <summary>
     /// Constructor of the OrderController class.
     /// </summary>

@@ -15,7 +15,7 @@ public interface IOrderRepository
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A list of orders.</returns>
     /// 
-    Task<List<Entities.Order>> GetAllAsync(OrderStatus status, CancellationToken cancellationToken = default, int skip = 0, int take = 10);
+    Task<List<Entities.Order>> GetAllAsync(OrderStatus status, int skip = 0, int take = 10, CancellationToken cancellationToken = default);
     /// <summary>
     /// Retrieves a list of orders following a specific criteria for monitoring purposes.
     /// </summary>
@@ -23,7 +23,7 @@ public interface IOrderRepository
     /// <param name="skip"></param>
     /// <param name="take"></param>
     /// <returns></returns>
-    Task<List<Entities.Order>> GetOrdersToMonitorAsync(CancellationToken cancellationToken = default, int skip = 0, int take = 10);
+    Task<List<Entities.Order>> GetOrdersToMonitorAsync(int skip = 0, int take = 10, CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Creates a new order in the system.
@@ -31,7 +31,7 @@ public interface IOrderRepository
     /// <param name="order">The order entity containing the details of the order to be created.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The unique identifier of the created order.</returns>
-    Task<Entities.Order> CreateAsync(Entities.Order order, CancellationToken cancellationToken);
+    Task<Entities.Order> CreateAsync(Entities.Order order, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves a oder by its unique identifier.

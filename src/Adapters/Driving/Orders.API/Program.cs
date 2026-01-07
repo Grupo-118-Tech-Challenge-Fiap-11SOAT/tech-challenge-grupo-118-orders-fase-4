@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    // using System.Reflection;
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
@@ -68,7 +67,7 @@ app.UseSwaggerUI(s =>
 {
     s.SwaggerEndpoint("../swagger/v1/swagger.json", "Tech Challenge - Fast Food - Orders API");
     s.RoutePrefix = string.Empty;
-    s.DocumentTitle = "Tech Challenge - Fast Food API | Swagger";
+    s.DocumentTitle = "Tech Challenge - Orders API | Swagger";
 });
 
 // Configure the HTTP request pipeline.

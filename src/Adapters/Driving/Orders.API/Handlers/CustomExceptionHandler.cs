@@ -17,6 +17,10 @@ public class CustomExceptionHandler : IExceptionHandler
 {
     private readonly ILogger<CustomExceptionHandler> _logger;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CustomExceptionHandler"/> class.
+    /// </summary>
+    /// <param name="logger"></param>
     public CustomExceptionHandler(ILogger<CustomExceptionHandler> logger)
     {
         _logger = logger;

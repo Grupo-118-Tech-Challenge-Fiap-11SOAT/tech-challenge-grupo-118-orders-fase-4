@@ -13,8 +13,8 @@ public class OrderRepository : IOrderRepository
         _dbContext = dbContext;
     }
 
-    public async Task<List<Domain.Order.Entities.Order>> GetAllAsync(OrderStatus status,
-        CancellationToken cancellationToken = default, int skip = 0, int take = 10)
+    public async Task<List<Domain.Order.Entities.Order>> GetAllAsync(OrderStatus status, int skip = 0, int take = 10,
+        CancellationToken cancellationToken = default)
     {
         var orders = await _dbContext.Orders
             .Where(o => o.Status.Equals(status))
@@ -28,7 +28,7 @@ public class OrderRepository : IOrderRepository
     }
     
     public async Task<List<Domain.Order.Entities.Order>> GetOrdersToMonitorAsync(
-        CancellationToken cancellationToken = default, int skip = 0, int take = 10)
+         int skip = 0, int take = 10, CancellationToken cancellationToken = default)
     {
         var orders = await _dbContext.Orders
             .Where(o => o.Status != OrderStatus.Completed && o.Status != OrderStatus.Canceled)

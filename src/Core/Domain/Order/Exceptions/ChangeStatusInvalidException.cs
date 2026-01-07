@@ -1,5 +1,4 @@
 ﻿using Domain.Base.Exceptions;
-using Domain.Order.Entities;
 
 namespace Domain.Order.Exceptions;
 

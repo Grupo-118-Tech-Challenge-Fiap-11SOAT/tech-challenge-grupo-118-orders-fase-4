@@ -13,7 +13,7 @@ public class ImageProduct : Domain.Base.Entities.BaseEntity
 
     public Product Product { get; protected set; }
 
-    private readonly Regex _imageRegex = new Regex(@"(\W)(jpg|jpeg|png|gif|webp)", RegexOptions.Compiled);
+    private readonly Regex _imageRegex = new Regex(@"(\W)(jpg|jpeg|png|gif|webp)", RegexOptions.Compiled, TimeSpan.FromMilliseconds(100));
 
     public ImageProduct(int productId, int position, string url, int id = 0)
     {

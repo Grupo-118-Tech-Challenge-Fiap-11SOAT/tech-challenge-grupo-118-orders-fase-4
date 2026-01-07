@@ -1,8 +1,7 @@
-﻿using Domain.Order.Dtos;
+﻿using System.Security.Cryptography;
+using Domain.Order.Dtos;
 using Domain.Base.Entities;
 using Domain.Order.Exceptions;
-using Domain.Products.Ports.In;
-using System.Threading;
 using Domain.Base.Exceptions;
 using Domain.Base.Extensions;
 using Domain.Order.ValueObjects;
@@ -35,9 +34,8 @@ public class Order : BaseEntity
 
     public Order(OrderRequestDto orderDto, List<ProductDto> products)
     {
-        var random = new Random();
 
-        OrderNumber = random.Next(100000, 1000000);
+        OrderNumber = RandomNumberGenerator.GetInt32(100000, 1000000);
 
         Cpf = orderDto.Cpf is null ? orderDto.Cpf : orderDto.Cpf.SanitizeCpf();
 
@@ -77,7 +75,7 @@ public class Order : BaseEntity
         if (NextStatus.TryGetValue(Status, out OrderStatus? nextStatus))
         {
             if (nextStatus is null)
-                throw new ChangeStatusNotAllowed(Status);
+                throw new ChangeStatusNotAllowedException(Status);
 
             Status = nextStatus.Value;
             UpdatedAt = DateTimeOffset.Now;

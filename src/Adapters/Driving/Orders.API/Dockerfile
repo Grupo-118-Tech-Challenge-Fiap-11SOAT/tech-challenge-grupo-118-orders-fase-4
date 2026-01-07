@@ -1,11 +1,14 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS base
 
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+RUN apk update && apk add --no-cache wget icu-libs icu-data-full tzdata ttf-opensans
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+RUN ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+ENV LC_ALL=pt_BR.UTF-8 \
+    LANG=pt_BR.UTF-8
+USER $APP_UID
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 COPY ["src/Adapters/Driving/Orders.API/Orders.API.csproj", "Adapters/Driving/Orders.API/"]
@@ -15,22 +18,15 @@ COPY ["src/Adapters/Driven/Infra.Database.SqlServer/Infra.Database.SqlServer.csp
 
 RUN dotnet restore "src/Adapters/Driving/Orders.API/Orders.API.csproj"
 
-COPY . .
+COPY src/ .
 WORKDIR "/src/src/Adapters/Driving/Orders.API"
-RUN dotnet build "./Orders.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Orders.API.csproj" -c Release -o /app --no-restore
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Orders.API.csproj" \
-     -c $BUILD_CONFIGURATION \
-     -o /app/publish \
-     /p:UseAppHost=false
+RUN dotnet publish "./Orders.API.csproj" -c Release -o /app --no-restore
 
 FROM base AS final
 WORKDIR /app
-
 COPY --from=publish /app/publish .
-
-USER $APP_UID
 
 ENTRYPOINT ["dotnet", "Orders.API.dll"]

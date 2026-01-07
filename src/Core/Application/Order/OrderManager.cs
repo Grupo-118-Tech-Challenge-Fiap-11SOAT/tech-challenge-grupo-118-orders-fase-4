@@ -24,7 +24,7 @@ public class OrderManager : IOrderManager
     public async Task<List<OrderResponseDto?>> GetAllAsync(OrderStatus status, int skip = 0, int take = 0,
         CancellationToken cancellationToken = default)
     {
-        var ordersList = await _orderRepository.GetAllAsync(status, cancellationToken, skip, take);
+        var ordersList = await _orderRepository.GetAllAsync(status, skip, take, cancellationToken);
 
         var result = new List<OrderResponseDto?>(ordersList.Count);
 
@@ -39,7 +39,7 @@ public class OrderManager : IOrderManager
     public async Task<List<OrderResponseDto>?> GetOrdersToMonitorAsync(CancellationToken cancellationToken = default,
         int skip = 0, int take = 10)
     {
-        var orderEntities = await _orderRepository.GetOrdersToMonitorAsync(cancellationToken, skip, take);
+        var orderEntities = await _orderRepository.GetOrdersToMonitorAsync( skip, take, cancellationToken);
 
         if (orderEntities is null)
             return null;
@@ -91,7 +91,7 @@ public class OrderManager : IOrderManager
         var order = await _orderRepository.GetByIdAsync(orderId, cancellationToken);
 
         if (order is null)
-            throw new OrderNotFoundExpetion(orderId);
+            throw new OrderNotFoundException(orderId);
 
         order.ChangeStatus();
         await _orderRepository.UpdateAsync(order, cancellationToken);
@@ -111,7 +111,7 @@ public class OrderManager : IOrderManager
         return result;
     }
     
-    private List<OrderItem> CreateOrderItemsFromOrder(Domain.Order.Entities.Order order)
+    private static List<OrderItem> CreateOrderItemsFromOrder(Domain.Order.Entities.Order order)
     {
         var orderItems = new List<OrderItem>();
 
