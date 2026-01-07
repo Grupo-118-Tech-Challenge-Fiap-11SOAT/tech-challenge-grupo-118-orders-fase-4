@@ -21,7 +21,7 @@ public class OrderManager : IOrderManager
     }
 
 
-    public async Task<List<OrderResponseDto?>> GetAllAsync(OrderStatus status, int skip = 0, int take = 0,
+    public async Task<List<OrderResponseDto?>> GetAllAsync(OrderStatus status, int skip = 0, int take = 10,
         CancellationToken cancellationToken = default)
     {
         var ordersList = await _orderRepository.GetAllAsync(status, skip, take, cancellationToken);
