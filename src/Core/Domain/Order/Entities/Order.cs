@@ -84,7 +84,7 @@ public class Order : BaseEntity
         if (Cpf is not null && !Cpf.IsValidCpf())
             throw new InvalidCpfException();
 
-        if (OrderItems.Count == null)
+        if (OrderItems is null)
             throw new EmptyOrderItemsException();
     }
 
