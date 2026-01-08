@@ -66,14 +66,14 @@ builder.Services.AddHttpClient<IProductManager, ProductManager>((serviceProvider
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var options = configuration.GetSection("ProductsApi");
     
-    client.BaseAddress = new Uri(options.GetValue<string>("BaseUrl"));
+    client.BaseAddress = new Uri(options.GetSection("BaseUrl").Value);
 });
 builder.Services.AddHttpClient<IPaymentManager, PaymentManager>((serviceProvider, client) =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var options = configuration.GetSection("PaymentsApi");
     
-    client.BaseAddress = new Uri(options.GetValue<string>("BaseUrl"));
+    client.BaseAddress = new Uri(options.GetSection("BaseUrl").Value);
 });
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 

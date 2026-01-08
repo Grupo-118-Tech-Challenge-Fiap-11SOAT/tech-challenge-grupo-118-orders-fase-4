@@ -12,9 +12,9 @@ public class ProductManager : IProductManager
     private readonly HttpClient _httpClient;
     private readonly string _productsApiBaseUrl;
     
-    public ProductManager(IConfiguration configuration)
+    public ProductManager(HttpClient httpClient, IConfiguration configuration)
     {
-        _httpClient = new HttpClient();
+        _httpClient = httpClient;
         _productsApiBaseUrl = configuration["ProductsApi:BaseUrl"] ?? throw new ArgumentNullException("ProductsApi:BaseUrl configuration is missing.");
     }
     

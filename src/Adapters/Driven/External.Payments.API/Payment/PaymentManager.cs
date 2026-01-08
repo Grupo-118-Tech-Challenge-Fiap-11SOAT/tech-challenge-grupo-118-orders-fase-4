@@ -11,9 +11,9 @@ public class PaymentManager : IPaymentManager
     private readonly HttpClient _httpClient;
     private readonly string _productsApiBaseUrl;
     
-    public PaymentManager(IConfiguration configuration)
+    public PaymentManager(HttpClient httpClient, IConfiguration configuration)
     {
-        _httpClient = new HttpClient();
+        _httpClient = httpClient;
         _productsApiBaseUrl = configuration["PaymentsApi:BaseUrl"] ?? throw new ArgumentNullException("PaymentsApi:BaseUrl configuration is missing.");
     }
     public Task<IAsyncResult> CreatePaymentAsync(CreatePaymentRequest request)
