@@ -61,8 +61,20 @@ builder.Services.AddSwaggerGen(s =>
 });
 
 builder.Services.AddScoped<IOrderManager, OrderManager>();
-builder.Services.AddScoped<IProductManager, ProductManager>();
-builder.Services.AddScoped<IPaymentManager, PaymentManager>();
+builder.Services.AddHttpClient<IProductManager, ProductManager>((serviceProvider, client) =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var options = configuration.GetSection("ProductsApi");
+    
+    client.BaseAddress = new Uri(options.GetValue<string>("BaseUrl"));
+});
+builder.Services.AddHttpClient<IPaymentManager, PaymentManager>((serviceProvider, client) =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var options = configuration.GetSection("PaymentsApi");
+    
+    client.BaseAddress = new Uri(options.GetValue<string>("BaseUrl"));
+});
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 var app = builder.Build();
