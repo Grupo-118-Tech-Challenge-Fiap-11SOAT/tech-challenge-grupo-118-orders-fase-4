@@ -1,0 +1,6 @@
+{
+  "$schema": "https://schemas.reqnroll.net/reqnroll-config-file.json",
+  "language": {
+    "feature": "pt-BR"
+  }
+}

@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  techchallengeorders:
+    build:
+      context: "/home/tiago/RiderProjects/tech-challenge-grupo-118-orders-fase-4"
+      dockerfile: "src/Adapters/Driving/Orders.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Orders.API.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "techchallengeorders:dev"
+    ports: []
+    volumes:
+    - "/home/tiago/RiderProjects/tech-challenge-grupo-118-orders-fase-4/src/Adapters/Driving/Orders.API:/app:rw"
+    - "/home/tiago/RiderProjects/tech-challenge-grupo-118-orders-fase-4:/src:rw"
+    - "/home/tiago/.nuget/packages:/root/.nuget/packages"
+    working_dir: "/app"
