@@ -84,26 +84,14 @@ secret:
   annotations: {}
   data:
     #         STEPS: 2. Criação das chaves no secret, com os valores que foram mapeados dos segredos
-    orders-db-host: "${ConnectionStrings__DefaultConnection}"
-    orders-jwt-key: "${Jwt__Key}"
-    orders-jwt-issuer: "${Jwt__Issuer}"
-    orders-jwt-audience: "${Jwt__Audience}"
-    orders-security-key: "${Security__Key}"
-    orders-paymentapi-baseurl: "${PaymentsApi__BaseUrl}"
+    orders-db-connectionstring: "${ConnectionStrings__DefaultConnection}"
+    orders-paymentsapi-baseurl: "${PaymentsApi__BaseUrl}"
     orders-productsapi-baseurl: "${ProductsApi__BaseUrl}"
   #         STEPS: 3. Mapear as chaves dos segredos para variaveis de ambientes, no formato que o asp.net reconhece para sobrescrever as configs do json
 
   envVars:
     - name: ConnectionStrings__DefaultConnection
       secretKey: orders-db-connectionstring
-    - name: Jwt__Key
-      secretKey: orders-jwt-key
-    - name: Jwt__Issuer
-      secretKey: orders-jwt-issuer
-    - name: Jwt__Audience
-      secretKey: orders-jwt-audience
-    - name: Security__Key
-      secretKey: orders-security-key
     - name: PaymentsApi__BaseUrl
       secretKey: orders-paymentsapi-baseurl
     - name: ProductsApi__BaseUrl
