@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Domain.Base.Exceptions;
 
 namespace Domain.Products.Exceptions;
@@ -10,6 +11,7 @@ namespace Domain.Products.Exceptions;
 /// set to zero or a negative value, which is considered invalid.
 /// </remarks>
 /// <seealso cref="DomainException" />
+[ExcludeFromCodeCoverage]
 public class ProductInvalidPriceException: DomainException
 {
     /// <summary>

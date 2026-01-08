@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using Infra.Database.SqlServer.Order.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Database.SqlServer;
 
+[ExcludeFromCodeCoverage]
 public class AppDbContext : DbContext
 {
     public DbSet<Domain.Order.Entities.Order> Orders { get; set; }

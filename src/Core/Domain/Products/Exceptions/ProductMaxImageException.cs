@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Domain.Base.Exceptions;
 
 namespace Domain.Products.Exceptions;
@@ -5,6 +6,7 @@ namespace Domain.Products.Exceptions;
 /// <summary>
 /// Exception that is thrown when a product exceeds the allowed maximum number of images.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class ProductMaxImageException : DomainException
 {
     /// <summary>

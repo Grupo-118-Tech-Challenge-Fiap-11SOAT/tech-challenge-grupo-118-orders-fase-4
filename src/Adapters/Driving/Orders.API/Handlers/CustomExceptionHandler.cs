@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Domain.Base.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ namespace Orders.API.Handlers;
 /// It utilizes the ILogger service for logging and processes exceptions to provide appropriate HTTP status codes
 /// and problem details based on exception types.
 /// </remarks>
+[ExcludeFromCodeCoverage]
 public class CustomExceptionHandler : IExceptionHandler
 {
     private readonly ILogger<CustomExceptionHandler> _logger;

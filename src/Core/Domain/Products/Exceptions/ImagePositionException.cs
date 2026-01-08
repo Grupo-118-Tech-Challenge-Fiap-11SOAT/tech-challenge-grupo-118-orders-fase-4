@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Domain.Base.Exceptions;
 
 namespace Domain.Products.Exceptions;
@@ -9,6 +10,7 @@ namespace Domain.Products.Exceptions;
 /// This exception is typically used to enforce business rules related to the positioning
 /// of images in the system. For example, the position should not be less than or equal to zero.
 /// </remarks>
+[ExcludeFromCodeCoverage]
 public class ImagePositionException : DomainException
 {
     /// <summary>
