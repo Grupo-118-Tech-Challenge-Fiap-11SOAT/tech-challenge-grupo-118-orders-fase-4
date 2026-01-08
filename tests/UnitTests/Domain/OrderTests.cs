@@ -18,7 +18,7 @@ public class OrderTests
             Cpf = "12345678909", // Valid CPF format (mocked validation)
             Items = new List<OrderItemDto>
             {
-                new OrderItemDto { ProductId = 1, Quantity = 2 }
+                new OrderItemDto { ProductId = "1", Quantity = 2 }
             }
         };
         var products = new List<ProductDto>
@@ -61,7 +61,7 @@ public class OrderTests
         // Arrange
         var orderDto = new OrderRequestDto
         {
-            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = 1, Quantity = 1 } }
+            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = "1", Quantity = 1 } }
         };
         var products = new List<ProductDto> { new ProductDto {  Price = 10.0m } };
         var order = new Order(orderDto, products); // Status: Received
@@ -91,7 +91,7 @@ public class OrderTests
         // Arrange
         var orderDto = new OrderRequestDto
         {
-            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = 1, Quantity = 1 } }
+            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = "1", Quantity = 1 } }
         };
         var products = new List<ProductDto> { new ProductDto { Price = 10.0m } };
         var order = new Order(orderDto, products);

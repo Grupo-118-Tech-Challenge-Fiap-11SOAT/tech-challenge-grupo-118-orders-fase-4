@@ -1,15 +1,17 @@
-﻿namespace Domain;
+﻿using Domain.Products.Entities;
 
-public class BaseDomain
+namespace Domain;
+
+public class BaseDomain <TId>
 {
-    public int Id { get; set; }
+    public TId Id { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
     public bool IsActive { get; set; }
     
-    public BaseDomain(int id = 0, DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null)
+    public BaseDomain(TId id, DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null)
     {
-        if (id != 0)
+        if (!Equals(id, default))
             this.Id = id;
 
         if (createdAt is not null)
@@ -17,5 +19,9 @@ public class BaseDomain
 
         if (updatedAt is not null)
             this.UpdatedAt = updatedAt.Value;
+    }
+    
+    public BaseDomain()
+    {
     }
 }

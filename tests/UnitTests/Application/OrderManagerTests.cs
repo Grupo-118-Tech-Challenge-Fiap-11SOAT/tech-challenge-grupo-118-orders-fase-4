@@ -55,7 +55,7 @@ public class OrderManagerTests
         // Arrange
         var orderDto = new OrderRequestDto
         {
-            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = 1, Quantity = 1 } }
+            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = "1", Quantity = 1 } }
         };
         var order = new Order(new OrderRequestDto { Items = new List<OrderItemDto>() }, new List<Product>());
         var ordersList = new List<Order> { order };
@@ -91,12 +91,12 @@ public class OrderManagerTests
         // Arrange
         var orderDto = new OrderRequestDto
         {
-            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = 1, Quantity = 1 } }
+            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = "1", Quantity = 1 } }
         };
-        var product = new Product("Test Product", "Description", ProductType.Snack, 10.0m, true, 1);
+        var product = new Product("Test Product", "Description", ProductType.Snack, 10.0m, true, "1");
         var activeProducts = new List<Product> { product };
 
-        _productManagerMock.Setup(p => p.GetActiveProductsByIds(It.IsAny<int[]>(), It.IsAny<CancellationToken>()))
+        _productManagerMock.Setup(p => p.GetActiveProductsByIds(It.IsAny<string[]>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(activeProducts);
 
         _orderRepositoryMock.Setup(r => r.CreateAsync(It.IsAny<Order>(), It.IsAny<CancellationToken>()))

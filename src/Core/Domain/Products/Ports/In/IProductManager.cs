@@ -5,6 +5,6 @@ namespace Domain.Products.Ports.In
 {
     public interface IProductManager
     {
-        Task<List<Product>> GetActiveProductsByIds(int[] ids, CancellationToken cancellationToken);
+        Task<List<Product>> GetActiveProductsByIds(string[] ids, CancellationToken cancellationToken);
     }
 }

@@ -15,7 +15,7 @@ public class BaseDomainTests
         var updatedAt = DateTimeOffset.Now;
 
         // Act
-        var baseDomain = new BaseDomain(id, createdAt, updatedAt);
+        var baseDomain = new BaseDomain<int>(id, createdAt, updatedAt);
 
         // Assert
         Assert.AreEqual(id, baseDomain.Id);
@@ -30,7 +30,7 @@ public class BaseDomainTests
         var id = 0;
 
         // Act
-        var baseDomain = new BaseDomain(id);
+        var baseDomain = new BaseDomain<int>(id);
 
         // Assert
         Assert.AreEqual(0, baseDomain.Id);
@@ -41,7 +41,7 @@ public class BaseDomainTests
     {
         // Arrange
         // Act
-        var baseDomain = new BaseDomain();
+        var baseDomain = new BaseDomain<int>();
 
         // Assert
         Assert.AreEqual(default(DateTimeOffset), baseDomain.CreatedAt);
@@ -52,7 +52,7 @@ public class BaseDomainTests
     public void Properties_ShouldBeSettable()
     {
         // Arrange
-        var baseDomain = new BaseDomain();
+        var baseDomain = new BaseDomain<int>();
         var id = 10;
         var createdAt = DateTimeOffset.Now;
         var updatedAt = DateTimeOffset.Now.AddHours(1);

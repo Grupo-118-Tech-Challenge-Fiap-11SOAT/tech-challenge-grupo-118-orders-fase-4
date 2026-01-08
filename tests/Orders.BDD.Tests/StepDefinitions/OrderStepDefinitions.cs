@@ -40,11 +40,11 @@ namespace Orders.BDD.Tests.StepDefinitions
                 Cpf = "01527321010",
                 Items = new List<OrderItemDto>
                 {
-                    new OrderItemDto { ProductId = 1, Quantity = 2 }
+                    new OrderItemDto { ProductId = "1", Quantity = 2 }
                 }
             };
             
-            _productManagerMock.Setup(pm => pm.GetActiveProductsByIds(It.IsAny<int[]>(), It.IsAny<CancellationToken>()))
+            _productManagerMock.Setup(pm => pm.GetActiveProductsByIds(It.IsAny<string[]>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new List<Product>
                 {
                     new Product("Lanche", "Hamburguer", ProductType.Snack, 20.0m, true)

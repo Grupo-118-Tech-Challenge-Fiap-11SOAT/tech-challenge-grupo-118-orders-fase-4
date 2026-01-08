@@ -9,7 +9,7 @@ public class ProductDto
     /// <summary>
     /// The id of the product
     /// </summary>
-    public int? Id { get; private set; }
+    public string? Id { get; private set; }
 
     /// <summary>
     /// The name of the product
@@ -38,10 +38,10 @@ public class ProductDto
     /// The state of the product.
     /// </summary>
     public bool IsActive { get; set; }
-    
-    public ProductDto(string name, string description, ProductType category, decimal price, bool isActive, int id)
+
+    public ProductDto(string name, string description, ProductType category, decimal price, bool isActive, string id)
     {
-        if (id != 0)
+        if (!string.IsNullOrWhiteSpace(id))
             this.Id = id;
 
         this.Name = name;
@@ -50,7 +50,7 @@ public class ProductDto
         this.Price = price;
         this.IsActive = isActive;
     }
-    
+
     [JsonConstructor]
     public ProductDto(string name, string description, ProductType category, decimal price, bool isActive)
     {
@@ -62,5 +62,6 @@ public class ProductDto
     }
 
     public ProductDto()
-    {}
+    {
+    }
 }

@@ -84,7 +84,7 @@ public class OrderManager : IOrderManager
     
     public async Task<OrderResponseDto> CreateAsync(OrderRequestDto orderDto, CancellationToken cancellationToken)
     {
-            int[] productIds = orderDto.Items.Select(i => i.ProductId).ToArray();
+            string[] productIds = orderDto.Items.Select(i => i.ProductId).ToArray();
             var activeProducts = await _productManager.GetActiveProductsByIds(productIds, cancellationToken);
 
             var order = new Domain.Order.Entities.Order(orderDto, activeProducts);

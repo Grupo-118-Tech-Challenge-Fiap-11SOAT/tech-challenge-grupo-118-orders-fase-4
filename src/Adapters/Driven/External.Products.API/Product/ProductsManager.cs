@@ -17,7 +17,7 @@ public class ProductManager : IProductManager
         _productsApiBaseUrl = configuration["ProductsApi:BaseUrl"] ?? throw new ArgumentNullException("ProductsApi:BaseUrl configuration is missing.");
     }
     
-    public async Task<List<Domain.Products.Entities.Product>> GetActiveProductsByIds(int[] ids, CancellationToken cancellationToken)
+    public async Task<List<Domain.Products.Entities.Product>> GetActiveProductsByIds(string[] ids, CancellationToken cancellationToken)
     {
         var products = new List<Domain.Products.Entities.Product>();
         foreach (var id in ids)
