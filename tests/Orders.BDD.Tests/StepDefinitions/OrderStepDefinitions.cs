@@ -53,7 +53,7 @@ namespace Orders.BDD.Tests.StepDefinitions
             _orderRepositoryMock.Setup(r => r.CreateAsync(It.IsAny<Domain.Order.Entities.Order>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Domain.Order.Entities.Order order, CancellationToken token) => order);
             
-            _paymentManagerMock.Setup(p => p.CreatePaymentAsync(It.IsAny<CreatePaymentRequest>()))
+            _paymentManagerMock.Setup(p => p.CreatePaymentAsync(It.IsAny<CreatePaymentRequest>(),It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new Mock<IAsyncResult>().Object);
         }
 

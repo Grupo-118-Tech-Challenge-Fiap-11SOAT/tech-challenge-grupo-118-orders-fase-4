@@ -102,7 +102,7 @@ public class OrderManagerTests
         _orderRepositoryMock.Setup(r => r.CreateAsync(It.IsAny<Order>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((Order order, CancellationToken token) => order); // Changed to return the order object
         
-        _paymentManagerMock.Setup(p => p.CreatePaymentAsync(It.IsAny<CreatePaymentRequest>()))
+        _paymentManagerMock.Setup(p => p.CreatePaymentAsync(It.IsAny<CreatePaymentRequest>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new Mock<IAsyncResult>().Object);
 
         // Act
