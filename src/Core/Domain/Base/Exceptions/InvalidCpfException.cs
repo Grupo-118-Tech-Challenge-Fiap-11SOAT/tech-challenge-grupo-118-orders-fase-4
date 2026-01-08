@@ -1,8 +1,11 @@
-﻿namespace Domain.Base.Exceptions
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Domain.Base.Exceptions
 {
     /// <summary>
     /// Represents an exception that is thrown when an invalid CPF is encountered.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class InvalidCpfException : DomainException
     {
         /// <summary>

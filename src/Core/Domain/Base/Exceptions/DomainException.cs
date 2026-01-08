@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Domain.Base.Exceptions
 {
     /// <summary>
     /// Represents an domain exception
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class DomainException : Exception
     {
         /// <summary>
