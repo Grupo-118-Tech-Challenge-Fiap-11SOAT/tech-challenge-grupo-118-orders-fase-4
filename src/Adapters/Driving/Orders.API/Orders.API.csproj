@@ -37,6 +37,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Core\Application\Application.csproj" />
+      <ProjectReference Include="..\..\Driven\External.Payments.API\External.Payments.API.csproj" />
+      <ProjectReference Include="..\..\Driven\External.Products.API\External.Products.API.csproj" />
       <ProjectReference Include="..\..\Driven\Infra.Database.SqlServer\Infra.Database.SqlServer.csproj" />
     </ItemGroup>
 

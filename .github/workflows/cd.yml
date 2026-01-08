@@ -35,7 +35,10 @@ jobs:
             "DOCKER_REGISTRY": "DOCKER_REGISTRY",
             "ACR_USERNAME": "ACR_USERNAME",
             "ACR_PASSWORD": "ACR_PASSWORD",
-            "ConnectionStrings__DefaultConnection": "GS_ORDERS_DATABASE_CONNECTIONSTRING"
+            "ConnectionStrings__DefaultConnection": "GS_ORDERS_DATABASE_CONNECTIONSTRING",
+            "PaymentApi__BaseUrl": "GS_PAYMENT_API_BASE_URL",
+            "ProductApi__BaseUrl": "GS_PRODUCT_API_BASE_URL",
+            "UserApi__BaseUrl": "GS_USER_API_BASE_URL"
         }
       variables_mapping: |
         {

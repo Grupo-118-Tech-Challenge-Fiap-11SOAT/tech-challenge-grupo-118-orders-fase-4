@@ -1,9 +1,11 @@
 using System.Reflection;
 using Application.Order;
-using Application.Products;
 using Domain.Order.Ports.In;
 using Domain.Order.Ports.Out;
+using Domain.Payment.Ports.Out;
 using Domain.Products.Ports.In;
+using External.Payments.API.Payment;
+using External.Products.API.ProductsManagerAPI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -60,6 +62,7 @@ builder.Services.AddSwaggerGen(s =>
 
 builder.Services.AddScoped<IOrderManager, OrderManager>();
 builder.Services.AddScoped<IProductManager, ProductManager>();
+builder.Services.AddScoped<IPaymentManager, PaymentManager>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 var app = builder.Build();

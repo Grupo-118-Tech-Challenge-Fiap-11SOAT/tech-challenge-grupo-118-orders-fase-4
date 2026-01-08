@@ -11,6 +11,8 @@ COPY ["src/Adapters/Driving/Orders.API/Orders.API.csproj", "Adapters/Driving/Ord
 COPY ["src/Core/Application/Application.csproj", "Core/Application/"]
 COPY ["src/Core/Domain/Domain.csproj", "Core/Domain/"]
 COPY ["src/Adapters/Driven/Infra.Database.SqlServer/Infra.Database.SqlServer.csproj", "Adapters/Driven/Infra.Database.SqlServer/"]
+COPY ["src/Adapters/Driven/External.Products.API/External.Products.API.csproj", "Adapters/Driven/External.Products.API/"]
+COPY ["src/Adapters/Driven/External.Payments.API/External.Payments.API.csproj", "Adapters/Driven/External.Payments.API/"]
 
 RUN dotnet restore "Adapters/Driving/Orders.API/Orders.API.csproj"
 

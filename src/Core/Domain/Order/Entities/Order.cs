@@ -58,7 +58,25 @@ public class Order : BaseEntity
 
     public Order(OrderRequestDto orderDto, List<Product> activeProducts)
     {
-        throw new NotImplementedException();
+        OrderNumber = RandomNumberGenerator.GetInt32(100000, 1000000);
+
+        Cpf = orderDto.Cpf is null ? orderDto.Cpf : orderDto.Cpf.SanitizeCpf();
+
+        Status = OrderStatus.Received;
+        CreatedAt = DateTime.Now;
+        UpdatedAt = DateTime.Now;
+
+        OrderItems =
+            orderDto.Items?.Select(item => new OrderItem(Id, item.ProductId, item.Quantity)).ToList() ??
+            new List<OrderItem>();
+
+        Total = orderDto.Items?.Sum(item =>
+        {
+            var product = activeProducts.FirstOrDefault(p => p.Id == item.ProductId);
+            return product?.Price * item.Quantity;
+        }) ?? 0;
+
+        ValidateOrder();
     }
 
     private void ValidateOrder()
@@ -66,7 +84,7 @@ public class Order : BaseEntity
         if (Cpf is not null && !Cpf.IsValidCpf())
             throw new InvalidCpfException();
 
-        if (OrderItems.Count == 0)
+        if (OrderItems.Count == null)
             throw new EmptyOrderItemsException();
     }
 

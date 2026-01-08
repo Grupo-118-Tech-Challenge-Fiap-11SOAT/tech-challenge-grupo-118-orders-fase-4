@@ -3,6 +3,8 @@ using Domain.Order.Dtos;
 using Domain.Order.Entities;
 using Domain.Order.Ports.Out;
 using Domain.Order.ValueObjects;
+using Domain.Payment.Ports.Dtos;
+using Domain.Payment.Ports.Out;
 using Domain.Products.Entities;
 using Domain.Products.Ports.In;
 using Domain.Products.ValueObjects;
@@ -19,13 +21,15 @@ namespace Orders.BDD.Tests.StepDefinitions
         private OrderResponseDto _result;
         private Mock<IOrderRepository> _orderRepositoryMock;
         private Mock<IProductManager> _productManagerMock;
+        private Mock<IPaymentManager> _paymentManagerMock;
         private OrderManager _orderManager;
 
         public OrderStepDefinitions()
         {
             _orderRepositoryMock = new Mock<IOrderRepository>();
             _productManagerMock = new Mock<IProductManager>();
-            _orderManager = new OrderManager(_orderRepositoryMock.Object, _productManagerMock.Object);
+            _paymentManagerMock = new Mock<IPaymentManager>();
+            _orderManager = new OrderManager(_orderRepositoryMock.Object, _productManagerMock.Object, _paymentManagerMock.Object);
         }
 
         [Given(@"que eu tenho um pedido válido")]
@@ -33,13 +37,13 @@ namespace Orders.BDD.Tests.StepDefinitions
         {
             _orderRequest = new OrderRequestDto
             {
-                Cpf = "12345678900",
+                Cpf = "01527321010",
                 Items = new List<OrderItemDto>
                 {
                     new OrderItemDto { ProductId = 1, Quantity = 2 }
                 }
             };
-
+            
             _productManagerMock.Setup(pm => pm.GetActiveProductsByIds(It.IsAny<int[]>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new List<Product>
                 {
@@ -47,7 +51,10 @@ namespace Orders.BDD.Tests.StepDefinitions
                 });
             
             _orderRepositoryMock.Setup(r => r.CreateAsync(It.IsAny<Domain.Order.Entities.Order>(), It.IsAny<CancellationToken>()))
-                .Returns((Task<Order>)Task.CompletedTask);
+                .ReturnsAsync((Domain.Order.Entities.Order order, CancellationToken token) => order);
+            
+            _paymentManagerMock.Setup(p => p.CreatePaymentAsync(It.IsAny<CreatePaymentRequest>()))
+                .ReturnsAsync(new Mock<IAsyncResult>().Object);
         }
 
         [When(@"eu envio o pedido")]

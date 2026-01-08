@@ -1,5 +1,5 @@
 namespace Application;
 
-public class ApplicationException : Exception
+public class ApplicationException(string errorRetrievingOrders, Exception exception) : Exception
 {
 }
