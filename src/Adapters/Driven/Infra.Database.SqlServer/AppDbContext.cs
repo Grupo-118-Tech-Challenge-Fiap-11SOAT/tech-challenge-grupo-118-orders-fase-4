@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Domain.Products.Entities;
 using Infra.Database.SqlServer.Order.Configuration;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,10 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        // Ignore Product and ImageProduct entities
+        modelBuilder.Ignore<Product>();
+        modelBuilder.Ignore<ImageProduct>();        
+        
         modelBuilder.ApplyConfiguration(new OrderConfiguration());
         modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
     }

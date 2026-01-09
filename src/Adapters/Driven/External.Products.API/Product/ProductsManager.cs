@@ -22,7 +22,7 @@ public class ProductManager : IProductManager
         var products = new List<Domain.Products.Entities.Product>();
         foreach (var id in ids)
         {
-            var product = await _httpClient.GetFromJsonAsync<Domain.Products.Entities.Product>($"{_productsApiBaseUrl}/GetDetailedProduct/{id}", cancellationToken);
+            var product = await _httpClient.GetFromJsonAsync<Domain.Products.Entities.Product>($"{_productsApiBaseUrl}/Products/{id}", cancellationToken);
             if (product != null) products.Add(product);
         }
         return products;
