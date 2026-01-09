@@ -35,7 +35,6 @@ public class OrderRepository : IOrderRepository
             .Skip(skip)
             .Take(take)
             .Include(o => o.OrderItems)
-            .ThenInclude(i => i.Product)
             .OrderByDescending(o => o.Status == OrderStatus.Ready)
             .ThenByDescending(o => o.Status == OrderStatus.InPreparation)
             .ThenByDescending(o => o.Status == OrderStatus.Received)

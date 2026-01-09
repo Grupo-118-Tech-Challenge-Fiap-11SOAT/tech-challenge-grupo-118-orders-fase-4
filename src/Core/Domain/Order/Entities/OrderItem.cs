@@ -16,11 +16,4 @@ public class OrderItem
         this.OrderId = orderId;
         this.Quantity = quantity;
     }
-    public OrderItem(string productId, int quantity, int orderId, Product product)
-    {
-        this.ProductId = productId;
-        this.Quantity = quantity;
-        this.OrderId = orderId;
-        this.Product = product;
-    }
 }

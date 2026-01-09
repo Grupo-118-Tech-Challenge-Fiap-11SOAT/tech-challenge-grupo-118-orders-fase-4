@@ -17,7 +17,8 @@ public class OrderManager : IOrderManager
     private readonly IProductManager _productManager;
     private readonly IPaymentManager _paymentManager;
 
-    public OrderManager(IOrderRepository orderRepository, IProductManager productManager, IPaymentManager paymentManager)
+    public OrderManager(IOrderRepository orderRepository, IProductManager productManager,
+        IPaymentManager paymentManager)
     {
         _orderRepository = orderRepository;
         _productManager = productManager;
@@ -46,34 +47,32 @@ public class OrderManager : IOrderManager
             throw new ApplicationException("Error retrieving orders", ex);
         }
     }
-    
+
     public async Task<List<OrderResponseDto>?> GetOrdersToMonitorAsync(CancellationToken cancellationToken = default,
         int skip = 0, int take = 10)
     {
         try
         {
-            var orderEntities = await _orderRepository.GetOrdersToMonitorAsync( skip, take, cancellationToken);
+            var orderEntities = await _orderRepository.GetOrdersToMonitorAsync(skip, take, cancellationToken);
 
             if (orderEntities is null)
                 return null;
-            
+
             var orderDtos = new List<OrderResponseDto>();
-            
+
             orderEntities.ForEach(orderEntity =>
             {
-                var orderItems = CreateOrderItemsFromOrder(orderEntity);
-
                 orderDtos.Add(new OrderResponseDto(orderEntity.OrderNumber,
                     orderEntity.Cpf,
                     orderEntity.Total,
                     orderEntity.Status,
                     orderEntity.IsActive,
-                    orderItems,
+                    orderEntity.OrderItems.ToList(),
                     orderEntity.Id,
                     orderEntity.CreatedAt,
                     orderEntity.UpdatedAt));
             });
-            
+
             return orderDtos;
         }
         catch (Exception ex)
@@ -81,34 +80,36 @@ public class OrderManager : IOrderManager
             throw new ApplicationException("Error retrieving orders to monitor", ex);
         }
     }
-    
+
     public async Task<OrderResponseDto> CreateAsync(OrderRequestDto orderDto, CancellationToken cancellationToken)
     {
-            string[] productIds = orderDto.Items.Select(i => i.ProductId).ToArray();
-            var activeProducts = await _productManager.GetActiveProductsByIds(productIds, cancellationToken);
+        string[] productIds = orderDto.Items.Select(i => i.ProductId).ToArray();
+        var activeProducts = await _productManager.GetActiveProductsByIds(productIds, cancellationToken);
 
-            var order = new Domain.Order.Entities.Order(orderDto, activeProducts);
+        var order = new Domain.Order.Entities.Order(orderDto, activeProducts);
 
-            await _orderRepository.CreateAsync(order, cancellationToken);
+        await _orderRepository.CreateAsync(order, cancellationToken);
 
-            var orderDtoResult = new OrderResponseDto
-            {
-                Cpf = order.Cpf,
-                Items = orderDto.Items,
-                Total = order.Total,
-                Status = order.Status,
-                OrderNumber = order.OrderNumber,
-                Id = order.Id
-            };
+        var orderDtoResult = new OrderResponseDto
+        {
+            Cpf = order.Cpf,
+            Items = orderDto.Items,
+            Total = order.Total,
+            Status = order.Status,
+            OrderNumber = order.OrderNumber,
+            Id = order.Id,
+            CreatedAt = order.CreatedAt,
+            UpdatedAt = order.UpdatedAt
+        };
 
-            var requestPayment = new CreatePaymentRequest();
-            var responsePayment =  await _paymentManager.CreatePaymentAsync(requestPayment);
-            return orderDtoResult;
-        // }
-        // catch (Exception ex)
-        // {
-        //     throw new ApplicationException("Error creating order", ex);
-        // }
+        var requestPayment = new CreatePaymentRequest
+        {
+            OrderId = order.Id.ToString(),
+            Value = order.Total
+        };
+
+        var _ = await _paymentManager.CreatePaymentAsync(requestPayment);
+        return orderDtoResult;
     }
 
     public async Task<OrderResponseDto> UpdateStatusAsync(int orderId, CancellationToken cancellationToken)
@@ -143,7 +144,7 @@ public class OrderManager : IOrderManager
 
             if (order is null)
                 return null;
-            
+
             var result = new OrderResponseDto(order);
 
             return result;
@@ -151,31 +152,6 @@ public class OrderManager : IOrderManager
         catch (Exception ex)
         {
             throw new ApplicationException($"Error retrieving order {id}", ex);
-        }
-    }
-    
-    private static List<OrderItem> CreateOrderItemsFromOrder(Domain.Order.Entities.Order order)
-    {
-        try
-        {
-            var orderItems = new List<OrderItem>();
-
-            order.OrderItems.ToList().ForEach(item =>
-            {
-                orderItems.Add(new OrderItem(item.ProductId, item.Quantity, order.Id,
-                    new Product(item.Product.Name,
-                        item.Product.Description,
-                        item.Product.Category,
-                        item.Product.Price,
-                        item.Product.IsActive,
-                        item.Product.Id)));
-            });
-
-            return orderItems;
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("Error creating order items from order", ex);
         }
     }
 }
