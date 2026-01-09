@@ -13,7 +13,6 @@ public class OrderResponseDto
     public decimal Total { get; set; }
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public OrderStatus Status { get; set; }
-    public bool IsActive { get; set; }
     public DateTimeOffset CreatedAt  { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
     public List<OrderItemDto> Items { get; set; }
@@ -29,7 +28,6 @@ public class OrderResponseDto
         Cpf = order.Cpf;
         Total = order.Total;
         Status = order.Status;
-        IsActive = order.IsActive;
         Items = order.OrderItems?.Select(item => new OrderItemDto
         {
             ProductId = item.ProductId,
@@ -46,7 +44,6 @@ public class OrderResponseDto
         Cpf = orderEntityCpf;
         Total = orderEntityTotal;
         Status = orderEntityStatus;
-        IsActive = orderEntityIsActive;
         Items = orderItems?.Select(item => new OrderItemDto
         {
             ProductId = item.ProductId,
