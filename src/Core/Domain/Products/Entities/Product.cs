@@ -5,10 +5,10 @@ using Domain.Products.ValueObjects;
 
 namespace Domain.Products.Entities
 {
-    public class Product : BaseDomain
+    public class Product : BaseDomain<string>
     {
         private const int MAX_IMAGES = 5;
-
+        
         public string Name { get; set; }
 
         public string Description { get; protected set; }
@@ -26,7 +26,7 @@ namespace Domain.Products.Entities
             ProductType productType,
             decimal price,
             bool isActive,
-            int id = 0,
+            string id = "",
             List<ImageProduct>? images = null,
             DateTimeOffset? createdAt = null,
             DateTimeOffset? updatedAt = null) : base(id, createdAt, updatedAt)
@@ -44,6 +44,7 @@ namespace Domain.Products.Entities
 
         protected Product()
         {
+            
         }
 
         public void UpdateProduct(string name, string description, ProductType category, decimal price, bool isActive)

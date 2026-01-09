@@ -37,7 +37,7 @@ public class OrderRepositoryTests
         // Arrange
         var orderDto = new OrderRequestDto
         {
-            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = 1, Quantity = 1 } }
+            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = "1", Quantity = 1 } }
         };
         var products = new List<ProductDto> { new ProductDto {  Price = 10.0m } };
         var order = new Order(orderDto, products);
@@ -58,7 +58,7 @@ public class OrderRepositoryTests
         // Arrange
         var orderDto = new OrderRequestDto
         {
-            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = 1, Quantity = 1 } }
+            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = "1", Quantity = 1 } }
         };
         var products = new List<ProductDto> { new ProductDto { Price = 10.0m } };
         var order = new Order(orderDto, products);
@@ -89,7 +89,7 @@ public class OrderRepositoryTests
         // Arrange
         var orderDto = new OrderRequestDto
         {
-            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = 1, Quantity = 1 } }
+            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = "1", Quantity = 1 } }
         };
         var products = new List<ProductDto> { new ProductDto {  Price = 10.0m } };
         var order1 = new Order(orderDto, products); // Status Received
@@ -118,7 +118,7 @@ public class OrderRepositoryTests
         // Arrange
         var orderDto = new OrderRequestDto
         {
-            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = 1, Quantity = 1 } }
+            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = "1", Quantity = 1 } }
         };
         var products = new List<ProductDto> { new ProductDto { Price = 10.0m } };
         var order = new Order(orderDto, products);
@@ -144,7 +144,7 @@ public class OrderRepositoryTests
         // Arrange
         var orderDto = new OrderRequestDto
         {
-            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = 1, Quantity = 1 } }
+            Items = new List<OrderItemDto> { new OrderItemDto { ProductId = "1", Quantity = 1 } }
         };
         var products = new List<ProductDto> { new ProductDto {  Price = 10.0m } };
         

@@ -19,7 +19,7 @@ public class PaymentManager : IPaymentManager
     }
     public async Task<IAsyncResult> CreatePaymentAsync(CreatePaymentRequest request, CancellationToken cancellationToken)
     {
-        HttpResponseMessage response = await _httpClient.PostAsJsonAsync<CreatePaymentRequest>($"{_paymentsApiBaseUrl}/CreatePayment", request, cancellationToken);
+        HttpResponseMessage response = await _httpClient.PostAsJsonAsync<CreatePaymentRequest>($"{_paymentsApiBaseUrl}/payments", request, cancellationToken);
         response.EnsureSuccessStatusCode();
 
         return Task.CompletedTask;
